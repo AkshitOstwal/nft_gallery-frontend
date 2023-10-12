@@ -3,9 +3,11 @@ import { Column, Row } from '@/component';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { default as NXTImage } from "next/image";
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { UserDataDto } from './models';
+import { UserDataDto } from '../../../models/models';
 
+const BUTTON_CLASS = `text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`;
 
 interface PaginatedDataProps {
   userAddress: string;
@@ -15,6 +17,7 @@ function PaginatedData(props: PaginatedDataProps) {
   const [data, setData] = useState<UserDataDto>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const router = useRouter();
 
   const fetchData = async (page: number, fetchLatest: boolean = false) => {
     try {
@@ -64,6 +67,9 @@ function PaginatedData(props: PaginatedDataProps) {
     fetchData(currentPage, true); // Call the fetchData function when the button is clicked
   };
 
+  const handleTokenDetail = (id: string) => {
+    router.push(`/nft-details/${id}`);
+  }
 
   return (
     <div>
@@ -71,10 +77,10 @@ function PaginatedData(props: PaginatedDataProps) {
       {data?.address}
       <div>currentPage:{currentPage}</div>
       <div>totalPages:{totalPages}</div>
-      <button onClick={handleRefreshClick}>Refresh Data</button>
+      <button className={`${BUTTON_CLASS}`} onClick={handleRefreshClick}>Refresh Data</button>
       <ul>
         {data?.tokens.map((token) => (
-          <li key={token.id}>
+          <li key={token.id} onClick={() => handleTokenDetail(token.id)}>
             <div className="w-full h-full bg-card-bg border border-[#ffffff1a] rounded-card-radius">
               <div className='p-4'>
                 <Column >
@@ -105,11 +111,11 @@ function PaginatedData(props: PaginatedDataProps) {
       <div className='p-10'>
 
         <Row center >
-          <button onClick={previousPage} disabled={currentPage === 1}>
+          <button className={`${BUTTON_CLASS}`} onClick={previousPage} disabled={currentPage === 1}>
             Previous Page
           </button>
 
-          <button onClick={nextPage} disabled={currentPage === totalPages}>
+          <button className={`${BUTTON_CLASS}`} onClick={nextPage} disabled={currentPage === totalPages}>
             Next Page
           </button>
         </Row>
