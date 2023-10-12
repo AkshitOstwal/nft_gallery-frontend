@@ -25,7 +25,7 @@ function TokenLayout(props: TokenLayoutProps) {
             }
 
             let reqOptions = {
-                url: `http://localhost:3000/nft-details/token?id=${props.id}&fetchLatest=${fetchLatest}`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/nft-details/token?id=${props.id}&fetchLatest=${fetchLatest}`,
                 method: "GET",
                 headers: headersList,
             }

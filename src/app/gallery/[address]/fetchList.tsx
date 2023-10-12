@@ -27,7 +27,7 @@ function PaginatedData(props: PaginatedDataProps) {
       }
 
       let reqOptions = {
-        url: `http://localhost:3000/nft-list/getList?address=${props.userAddress}&page=${page}&fetchLatest=${fetchLatest}`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}/nft-list/getList?address=${props.userAddress}&page=${page}&fetchLatest=${fetchLatest}`,
         method: "GET",
         headers: headersList,
       }
