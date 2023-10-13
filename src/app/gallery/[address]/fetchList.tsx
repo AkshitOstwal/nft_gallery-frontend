@@ -75,8 +75,7 @@ function PaginatedData(props: PaginatedDataProps) {
     <div>
       <h1>Paginated Data</h1>
       {data?.address}
-      <div>currentPage:{currentPage}</div>
-      <div>totalPages:{totalPages}</div>
+
       <button className={`${BUTTON_CLASS}`} onClick={handleRefreshClick}>Refresh Data</button>
       <ul>
         {data?.tokens.map((token) => (
